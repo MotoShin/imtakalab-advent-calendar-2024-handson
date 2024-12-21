@@ -38,7 +38,9 @@ jobs:
         with:
           scheme: full
           run: |
-            latexmk -pdf
+            ls base.tex main.tex
+            latexdiff base.tex main.tex > diff.tex
+            pdflatex diff.tex
 
       - name: Push diff PDF file
         run: |
