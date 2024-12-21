@@ -42,6 +42,6 @@ jobs:
 
       - name: Push diff PDF file
         run: |
-          git add diff.pdf
-          git commit -m "Add diff.pdf"
+          git add .
+          git commit -m "Add diff PDF file."
           git push origin output-pdf
