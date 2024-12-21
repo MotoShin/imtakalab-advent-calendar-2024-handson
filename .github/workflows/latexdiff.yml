@@ -46,3 +46,11 @@ jobs:
           git add diff.pdf
           git commit -m "Add diff PDF file."
           git push origin output-pdf
+
+      - name: Create PR comment
+        env: 
+          PR_NUMBER: ${{ github.event.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "差分をPDFで確認したい場合は下記を参照してください。<br>https://github.com/MotoShin/imtakalab-advent-calendar-2024-handson/blob/output-pdf/diff.pdf" > /tmp/comment.md
+          gh pr comment "${PR_NUMBER}" -F /tmp/comment.md
