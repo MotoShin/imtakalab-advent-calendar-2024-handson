@@ -34,8 +34,9 @@ jobs:
 
       # LaTeXdiffで差分を取得し、output-pdfブランチにpush
       - name: Compile LaTeX
-        uses: xu-cheng/latex-action@v3
+        uses: xu-cheng/texlive-action@v2
         with:
+          scheme: full
           run: |
             latexmk
 
