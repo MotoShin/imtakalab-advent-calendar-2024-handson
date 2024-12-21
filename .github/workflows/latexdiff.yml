@@ -1,0 +1,35 @@
+# PR作成、再オープン、変更時にmainブランチのmain.texとの差分を
+# LaTeXdiffでPDF出力してoutput-pdfブランチにpushするworkflow
+name: Output LaTeX difference
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - '**.tex'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 全てのリポジトリをfetchする (fetch-depth: 0)
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # output-pdfブランチに比較するためのLaTeXファイルを準備
+      - name: Prepare output-pdf branch
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git checkout output-pdf
+          git merge ${{ github.head_ref }}
+          git show ${{ github.base_ref }}:main.tex > base.tex
+
+      # LaTeXdiffで差分を取得し、output-pdfブランチにpush
+      - name: Compile LaTeX
+        uses: priyanshuone6/latexdiff-action@v1
+        with:
+          file-paths: main.tex base.tex
