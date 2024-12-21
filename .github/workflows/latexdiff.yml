@@ -27,8 +27,8 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email github-actions[bot]@users.noreply.github.com
           git checkout output-pdf
-          git merge ${{ github.head_ref }}
-          git show ${{ github.base_ref }}:main.tex > base.tex
+          git merge origin/${{ github.head_ref }}
+          git show origin/${{ github.base_ref }}:main.tex > base.tex
 
       # LaTeXdiffで差分を取得し、output-pdfブランチにpush
       - name: Compile LaTeX
