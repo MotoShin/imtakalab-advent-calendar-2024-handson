@@ -40,6 +40,7 @@ jobs:
             latexdiff base.tex main.tex > diff.tex
             pdflatex diff.tex
 
+      # 差分PDFファイルをpush
       - name: Push diff PDF file
         run: |
           git status
@@ -47,6 +48,7 @@ jobs:
           git commit -m "Add diff PDF file."
           git push origin output-pdf
 
+      # PRに差分PDFファイルのリンクをコメント
       - name: Create PR comment
         env: 
           PR_NUMBER: ${{ github.event.number }}
