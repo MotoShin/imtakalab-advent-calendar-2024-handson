@@ -1,0 +1,65 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{booktabs}
+
+\title{Sample \LaTeX{} Document}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Abstract}
+This is a sample document created using \LaTeX{}. It includes sections, equations, tables, and figures to demonstrate its capabilities.
+
+\section{Introduction}
+\LaTeX{} is a powerful tool for creating documents with high typographic quality. This document demonstrates various features, including mathematical expressions, tables, and figures.
+
+\section{Mathematics}
+\subsection{Inline Math}
+An inline math example: $E = mc^2$.
+
+\subsection{Displayed Equations}
+Here is a displayed equation:
+\begin{equation}
+\int_a^b x^2 \, dx = \frac{b^3}{3} - \frac{a^3}{3}.
+\end{equation}
+
+A system of equations:
+\begin{align}
+x + y &= 10, \\
+x - y &= 4.
+\end{align}
+
+\section{Tables}
+Here is a sample table:
+\begin{table}[h!]
+\centering
+\begin{tabular}{llr}
+\toprule
+\textbf{Item} & \textbf{Description} & \textbf{Price} \\
+\midrule
+Item 1 & Description 1 & \$10.00 \\
+Item 2 & Description 2 & \$15.00 \\
+Item 3 & Description 3 & \$20.00 \\
+\bottomrule
+\end{tabular}
+\caption{Sample table with items and prices.}
+\label{tab:sample_table}
+\end{table}
+
+\section{Figures}
+Here is a sample figure:
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\textwidth]{example-image}
+\caption{A sample figure. Replace \texttt{example-image} with your image file.}
+\label{fig:sample_figure}
+\end{figure}
+
+\section{Conclusion}
+This document showcases the basic features of \LaTeX{} for creating well-structured and visually appealing documents. Experiment with adding more sections, equations, and graphics to suit your needs.
+
+\end{document}
