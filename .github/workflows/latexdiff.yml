@@ -25,13 +25,34 @@ jobs:
           echo "HEAD: ${{ github.head_ref }}"
           echo "BASE: ${{ github.base_ref }}"
           git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git checkout output-pdf
           git merge origin/${{ github.head_ref }}
           git show origin/${{ github.base_ref }}:main.tex > base.tex
 
       # LaTeXdiffで差分を取得し、output-pdfブランチにpush
       - name: Compile LaTeX
-        uses: priyanshuone6/latexdiff-action@v1
+        uses: xu-cheng/texlive-action@v2
         with:
-          file-paths: main.tex base.tex
+          scheme: full
+          run: |
+            ls base.tex main.tex
+            latexdiff base.tex main.tex > diff.tex
+            pdflatex diff.tex
+
+      # 差分PDFファイルをpush
+      - name: Push diff PDF file
+        run: |
+          git status
+          git add diff.pdf
+          git commit -m "Add diff PDF file."
+          git push origin output-pdf
+
+      # PRに差分PDFファイルのリンクをコメント
+      - name: Create PR comment
+        env: 
+          PR_NUMBER: ${{ github.event.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "差分をPDFで確認したい場合は下記を参照してください。<br>https://github.com/MotoShin/imtakalab-advent-calendar-2024-handson/blob/output-pdf/diff.pdf" > /tmp/comment.md
+          gh pr comment "${PR_NUMBER}" -F /tmp/comment.md
