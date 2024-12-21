@@ -38,10 +38,11 @@ jobs:
         with:
           scheme: full
           run: |
-            latexmk
+            latexmk -pdf
 
       - name: Push diff PDF file
         run: |
-          git add .
+          git status
+          git add diff.pdf
           git commit -m "Add diff PDF file."
           git push origin output-pdf
