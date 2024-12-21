@@ -29,9 +29,18 @@ jobs:
           git checkout output-pdf
           git merge origin/${{ github.head_ref }}
           git show origin/${{ github.base_ref }}:main.tex > base.tex
+          echo '$pdflatex = "latexdiff base.tex main.tex > diff.tex; pdflatex %O  diff"' > latexmkrc
+          cat latexmkrc
 
       # LaTeXdiffで差分を取得し、output-pdfブランチにpush
       - name: Compile LaTeX
-        uses: priyanshuone6/latexdiff-action@v1
+        uses: xu-cheng/latex-action@v3
         with:
-          file-paths: main.tex base.tex
+          run: |
+            latexmk
+
+      - name: Push diff PDF file
+        run: |
+          git add diff.pdf
+          git commit -m "Add diff.pdf"
+          git push origin output-pdf
